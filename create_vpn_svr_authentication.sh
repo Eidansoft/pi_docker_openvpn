@@ -22,7 +22,12 @@ cp /opt/ca_conf.properties /opt/EasyRSA/vars
 easyrsa gen-dh
 openvpn --genkey --secret ta.key
 
+# Configure the OpenVpn server to use the certificate created
+sed -i.bak "s/^cert .*\.crt/cert $SVR_NAME.crt/g" /etc/openvpn/server.conf
+sed -i.bak "s/^key .*\.key/key $SVR_NAME.key/g" /etc/openvpn/server.conf
+
 create_folder_if_not_exist ../$FILES_OPENVPN_FOLDER
+cp pki/private/$SVR_NAME.key ../$FILES_OPENVPN_FOLDER
 cp ta.key ../$FILES_OPENVPN_FOLDER
 cp pki/dh.pem ../$FILES_OPENVPN_FOLDER
 
