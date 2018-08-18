@@ -36,10 +36,6 @@ easyrsa gen-dh
 # Generate a HMAC signature
 openvpn --genkey --secret ta.key
 
-# Configure the OpenVpn server to use the certificate created
-sed -i.bak "s/^cert .*\.crt/cert $SVR_NAME.crt/g" /etc/openvpn/server.conf
-sed -i.bak "s/^key .*\.key/key $SVR_NAME.key/g" /etc/openvpn/server.conf
-
 # Save all openvpn service needed files into the recopilation folder
 create_folder_if_not_exist ../$FILES_OPENVPN_FOLDER
 cp pki/private/$SVR_NAME.key ../$FILES_OPENVPN_FOLDER
