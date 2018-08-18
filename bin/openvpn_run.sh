@@ -1,8 +1,5 @@
 #!/bin/bash
 
-create_vpn_svr_authentication.sh svr
-create_new_ca.sh svr
-create_new_openvpn_client.sh cli
 cp /mnt/files_openvpn/* /etc/openvpn/
 
 mkdir -p /dev/net

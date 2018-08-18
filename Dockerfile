@@ -17,13 +17,14 @@ WORKDIR /mnt
 # RUN chown $USER_NAME:$USER_NAME /mnt
 
 COPY EasyRSA-${EASY_RSA_VERSION}.tgz /opt
-COPY ca_conf.properties /opt
-COPY common_functions.sh /usr/bin
-COPY create_new_ca.sh /usr/bin
-COPY create_vpn_svr_authentication.sh /usr/bin
-COPY create_new_openvpn_client.sh /usr/bin
 COPY openvpn_server.conf /etc/openvpn/server.conf
-COPY openvpn_run.sh /usr/bin
+COPY openvpn_client.conf /opt
+COPY ca_conf.properties /opt
+COPY bin/openvpn_common_functions.sh /usr/bin
+COPY bin/openvpn_ca_init.sh /usr/bin
+COPY bin/openvpn_server_init.sh /usr/bin
+COPY bin/openvpn_client_init.sh /usr/bin
+COPY bin/openvpn_run.sh /usr/bin
 
 RUN tar xvf /opt/EasyRSA-${EASY_RSA_VERSION}.tgz --directory /opt && \
     cp /opt/ca_conf.properties /opt/EasyRSA-${EASY_RSA_VERSION}/vars && \
