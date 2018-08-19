@@ -22,13 +22,13 @@ pushd $FILES_CA_NAME_FOLDER
 easyrsa init-pki
 
 # Generate the CA certificates
-easyrsa build-ca nopass
+easyrsa --batch build-ca nopass
 
 # Import the server request to be signed by the CA
 easyrsa import-req /mnt/$FILES_SVR_NAME_FOLDER/pki/reqs/$SVR_NAME.req $SVR_NAME
 
 # Sign the server certificate
-easyrsa sign-req server $SVR_NAME
+easyrsa --batch sign-req server $SVR_NAME
 
 # Save all openvpn service needed files into the recopilation folder
 create_folder_if_not_exist ../$FILES_OPENVPN_FOLDER

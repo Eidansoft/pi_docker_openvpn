@@ -1,41 +1,26 @@
-FROM debian
+FROM alpine:latest
 
 LABEL maintainer="http://alejandro.lorente.info"
 
-ENV EASY_RSA_VERSION 3.0.4
-ENV USER_NAME alex
-
-# RUN groupadd -g 999 $USER_NAME && \
-    # useradd -r -u 999 -g $USER_NAME $USER_NAME
-
-RUN apt-get update && \
-    apt-get install -y openssl openvpn nano
-
-WORKDIR /mnt
-
-# RUN chmod ugo+w /etc/openvpn/
-# RUN chown $USER_NAME:$USER_NAME /mnt
-
-COPY EasyRSA-${EASY_RSA_VERSION}.tgz /opt
 COPY openvpn_server.conf /etc/openvpn/server.conf
-COPY openvpn_client.conf /opt
-COPY ca_conf.properties /opt
+COPY openvpn_client.conf /tmp
+COPY ca_conf.properties /tmp
 COPY bin/openvpn_common_functions.sh /usr/bin
 COPY bin/openvpn_ca_init.sh /usr/bin
 COPY bin/openvpn_server_init.sh /usr/bin
 COPY bin/openvpn_client_init.sh /usr/bin
 COPY bin/openvpn_run.sh /usr/bin
 
-RUN tar xvf /opt/EasyRSA-${EASY_RSA_VERSION}.tgz --directory /opt && \
-    cp /opt/ca_conf.properties /opt/EasyRSA-${EASY_RSA_VERSION}/vars && \
-    ln -s /opt/EasyRSA-${EASY_RSA_VERSION} /opt/EasyRSA && \
-    chmod ugo+w /opt/EasyRSA/vars
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
+    apk add --update openvpn iptables bash easy-rsa nano && \
+    ln -s /usr/share/easy-rsa/easyrsa /usr/local/bin && \
+    rm -rf /var/tmp/* /var/cache/apk/* /var/cache/distfiles/* && \
+    ln -s /usr/share/easy-rsa/openssl-easyrsa.cnf /usr/local/bin/openssl-easyrsa.cnf && \
+    ln -s /usr/share/easy-rsa/x509-types /usr/local/bin/
+    # cp /tmp/ca_conf.properties /etc/easy-rsa/vars
 
-ENV PATH="/opt/EasyRSA-3.0.4:${PATH}"
+WORKDIR /mnt
 
 ENV SVR_NAME svr
-
-
-# USER $USER_NAME
 
 CMD openvpn_run.sh $SVR_NAME

@@ -18,14 +18,8 @@ CLIENT_NAME=$1
 # To generate the client certificates I'm gonna work at the server folder (for that reason it must previously exist), so now I change to that folder
 pushd $FILES_SVR_NAME_FOLDER
 
-# Set the Common Name (CN) at the easyrsa configuration to identify properly the client
-echo "set_var EASYRSA_REQ_CN \"VPN Client $CLIENT_NAME\"" >> /opt/EasyRSA/vars
-
 # Generate the client certificate request
-easyrsa gen-req $CLIENT_NAME nopass
-
-# Clean the easyrsa configuration file to remove the previous changes setting the CN for the client
-cp /opt/ca_conf.properties /opt/EasyRSA/vars
+easyrsa --batch --req-cn="VPN Client $CLIENT_NAME" gen-req $CLIENT_NAME nopass
 
 popd
 
@@ -36,7 +30,7 @@ pushd $FILES_CA_NAME_FOLDER
 easyrsa import-req ../$FILES_SVR_NAME_FOLDER/pki/reqs/$CLIENT_NAME.req $CLIENT_NAME
 
 # Sign the client certificate
-easyrsa sign-req client $CLIENT_NAME
+easyrsa --batch sign-req client $CLIENT_NAME
 
 popd
 
@@ -51,7 +45,7 @@ cp $FILES_SVR_NAME_FOLDER/ta.key $CLIENT_FOLDER
 cp $FILES_CA_NAME_FOLDER/pki/ca.crt $CLIENT_FOLDER
 
 # Generate the *.ovpn file for the client
-cat /opt/openvpn_client.conf \
+cat /tmp/openvpn_client.conf \
     <(echo -e '<ca>') \
     $CLIENT_FOLDER/ca.crt \
     <(echo -e '</ca>\n<cert>') \

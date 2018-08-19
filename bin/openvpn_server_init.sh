@@ -21,14 +21,8 @@ pushd $FILES_SVR_NAME_FOLDER
 # Creante the initial PKI structure
 easyrsa init-pki
 
-# Set the Common Name (CN) at the easyrsa configuration to identify properly the server
-echo "set_var EASYRSA_REQ_CN \"VPN Server $SVR_NAME\"" >> /opt/EasyRSA/vars
-
 # Generate the server certificate request
-easyrsa gen-req $SVR_NAME nopass
-
-# Clean the easyrsa configuration file to remove the previous changes setting the CN for the server
-cp /opt/ca_conf.properties /opt/EasyRSA/vars
+easyrsa --batch --req-cn="VPN Server $SVR_NAME" gen-req $SVR_NAME nopass
 
 # Generate the Diffie-Hellman key
 easyrsa gen-dh
@@ -49,10 +43,10 @@ echo "######################################"
 echo ""
 echo "Summary:"
 echo "You have created a new certificate for your server <$SVR_NAME>."
-echo "The certificate request to be signed is at <$FILES_SVR_NAME_FOLDER/pki/reqs/$SVR_NAME.req>"
-echo "The server private key is at <$FILES_SVR_NAME_FOLDER/pki/private/$SVR_NAME.key>"
-echo "The Diffie-Hellman key is at <$FILES_OPENVPN_FOLDER/dh.pem>."
-echo "The HMAC signature is at <$FILES_OPENVPN_FOLDER/ta.key>."
+echo "The certificate request to be signed is at <$PWD/$FILES_SVR_NAME_FOLDER/pki/reqs/$SVR_NAME.req>"
+echo "The server private key is at <$PWD/$FILES_SVR_NAME_FOLDER/pki/private/$SVR_NAME.key>"
+echo "The Diffie-Hellman key is at <$PWD/$FILES_OPENVPN_FOLDER/dh.pem>."
+echo "The HMAC signature is at <$PWD/$FILES_OPENVPN_FOLDER/ta.key>."
 echo "Now you must run the script to sign the server request with your CA."
 
 exit 0
