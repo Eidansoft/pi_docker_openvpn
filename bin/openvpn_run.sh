@@ -1,11 +1,17 @@
 #!/bin/bash
 
+# Load common functions
+source openvpn_common_functions.sh
+
 # The server name is mandatory
 SVR_NAME=$1
 [ "$SVR_NAME" = "" ] && echo "[ERROR] The server name is mandatory." && exit 1
 
+# The folder with all certificates and keys must exist at the expected folder in order to be able to run the script
+[ ! -d $FILES_OPENVPN_FOLDER ] && echo "[ERROR] The <$FILES_OPENVPN_FOLDER> does not exist. You must provide the folder with the certificates and keys to use with the OpenVPN service." && exit 1
+
 # Copy all needed files for the openvpn server to work
-cp /mnt/files_openvpn/* /etc/openvpn/
+cp /mnt/$FILES_OPENVPN_FOLDER/* /etc/openvpn/
 
 # Configure the OpenVpn server to use the certificate created
 sed -i.bak "s/^cert .*\.crt/cert $SVR_NAME.crt/g" /etc/openvpn/server.conf
@@ -19,4 +25,4 @@ fi
 
 # Move into the openvpn folder and start the server
 pushd /etc/openvpn/
-openvpn --config /etc/openvpn/server.conf
+openvpn --config /etc/openvpn/server.conf | tee /mnt/openvpn.log

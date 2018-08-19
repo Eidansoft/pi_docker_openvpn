@@ -33,8 +33,9 @@ RUN tar xvf /opt/EasyRSA-${EASY_RSA_VERSION}.tgz --directory /opt && \
 
 ENV PATH="/opt/EasyRSA-3.0.4:${PATH}"
 
-EXPOSE 11911/udp
+ENV SVR_NAME svr
+
 
 # USER $USER_NAME
 
-#CMD startX.sh
+CMD openvpn_run.sh $SVR_NAME
