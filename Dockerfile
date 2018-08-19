@@ -12,7 +12,7 @@ COPY bin/openvpn_client_init.sh /usr/bin
 COPY bin/openvpn_run.sh /usr/bin
 
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
-    apk add --update openvpn iptables bash easy-rsa ufw && \
+    apk add --update openvpn iptables bash easy-rsa && \
     ln -s /usr/share/easy-rsa/easyrsa /usr/local/bin && \
     rm -rf /var/tmp/* /var/cache/apk/* /var/cache/distfiles/* && \
     ln -s /usr/share/easy-rsa/openssl-easyrsa.cnf /usr/local/bin/openssl-easyrsa.cnf && \
