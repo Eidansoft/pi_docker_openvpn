@@ -55,3 +55,30 @@ Some of the utilities that I are acostume to use are:
 ## Create the Docker images
 
     sudo docker build . -t openvpnserver
+
+## Start the container and run the OpenVPN service
+
+    sudo docker run -it --name ovpn --rm --privileged -v $PWD:/mnt -p 11911:11911/udp openvpnserver
+
+# Manual tasks
+You can start the docker container running just a /bin/bash prompt and work manually with all scripts. To start the container:
+
+   sudo docker run -it --name test --rm -v $PWD:/mnt openvpnserver /bin/bash
+
+Once you have started the container you can call any of the scripts in order to execute the different tasks:
+
+* Initialize the OpenVPN server certificates, keys and configurations.
+
+    openvpn_server_init.sh <SERVER_NAME>
+
+* Initialize the OpenVPN CA certificates and keys.
+
+    openvpn_ca_init.sh <SERVER_NAME>
+
+* Initialize the OpenVPN Client certificates, keys and configuration files.
+
+    openvpn_client_init.sh <CLIENT_NAME>
+
+* Start the OpenVpn service (In order to be able to run the service the container must have been started with the privileged param and the exposed port to use)
+
+    openvpn_run.sh <SERVER_NAME>
