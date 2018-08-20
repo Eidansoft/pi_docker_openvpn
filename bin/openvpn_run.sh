@@ -23,6 +23,10 @@ if [ ! -c /dev/net/tun ]; then
     mknod /dev/net/tun c 10 200
 fi
 
+# Set the NAT rules to let the client surf the web when connected to the VPN. The IP 10.8.0.0 is the default IP used by openvpn server, that can be changed at the /etc/openvpn/server.conf if needed. And the eth0 interface is the default one created by the docker container.
+iptables -t nat -C POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+
 # Move into the openvpn folder and start the server
 pushd /etc/openvpn/
 openvpn --config /etc/openvpn/server.conf | tee /mnt/openvpn.log
