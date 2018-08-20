@@ -58,7 +58,11 @@ Some of the utilities that I are acostume to use are:
 
 ## Start the container and run the OpenVPN service
 
-    sudo docker run -it --name ovpn --rm --privileged -v $PWD:/mnt -p 11911:11911/udp openvpnserver
+    sudo docker run -d --name openvpn --privileged -v $PWD:/mnt -p 11911:11911/udp --restart unless-stopped openvpnserver
+
+## Stop the container with the OpenVPN service
+
+    sudo docker rm -f openvpn
 
 # Manual tasks
 You can start the docker container running just a /bin/bash prompt and work manually with all scripts. To start the container:
