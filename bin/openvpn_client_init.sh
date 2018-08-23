@@ -19,7 +19,7 @@ CLIENT_NAME=$1
 pushd $FILES_SVR_NAME_FOLDER
 
 # Generate the client certificate request
-easyrsa --batch --req-cn="VPN Client $CLIENT_NAME" gen-req $CLIENT_NAME nopass
+easyrsa --vars=/tmp/ca_conf.properties --batch --req-cn="VPN Client $CLIENT_NAME" gen-req $CLIENT_NAME nopass
 
 popd
 

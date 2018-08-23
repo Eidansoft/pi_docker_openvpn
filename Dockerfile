@@ -17,7 +17,6 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/reposi
     rm -rf /var/tmp/* /var/cache/apk/* /var/cache/distfiles/* && \
     ln -s /usr/share/easy-rsa/openssl-easyrsa.cnf /usr/local/bin/openssl-easyrsa.cnf && \
     ln -s /usr/share/easy-rsa/x509-types /usr/local/bin/
-    # cp /tmp/ca_conf.properties /etc/easy-rsa/vars
 
 WORKDIR /mnt
 

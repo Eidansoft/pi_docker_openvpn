@@ -19,13 +19,13 @@ mkdir $FILES_SVR_NAME_FOLDER
 pushd $FILES_SVR_NAME_FOLDER
 
 # Creante the initial PKI structure
-easyrsa init-pki
+easyrsa --vars=/tmp/ca_conf.properties init-pki
 
 # Generate the server certificate request
-easyrsa --batch --req-cn="VPN Server $SVR_NAME" gen-req $SVR_NAME nopass
+easyrsa --vars=/tmp/ca_conf.properties --batch --req-cn="VPN Server $SVR_NAME" gen-req $SVR_NAME nopass
 
 # Generate the Diffie-Hellman key
-easyrsa gen-dh
+easyrsa --vars=/tmp/ca_conf.properties gen-dh
 
 # Generate a HMAC signature
 openvpn --genkey --secret ta.key
