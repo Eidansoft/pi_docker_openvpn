@@ -22,9 +22,14 @@ Once you have cloned the project, you need to build the docker image:
 ## Create all needed stuff
 In order to put the server up&running for the very first time, we must create some configuration files, keys and certificates.
 
-To generate all this needed files you must start the docker container with a volume mounted at /mnt (with `-v YOUR_FOLDER:/mnt`), at this folder mounted the container will save for you all the files. For example, to run the container and save the generated files at current folder ($PWD) you must run:
+First thing first, you must configure some specific values for your VPN.
 
-    sudo docker run -it --name test --rm -v $PWD:/mnt openvpnserver /bin/bash
+* At the `openvpn_client.conf` you must set the domain and the port you want to use for your server. The domain you must be the owner, or create one at www.no-ip.com and point it to your VPN Server.
+The line to update is `remote myserver.ddns.net 1194`.
+
+Now we can proceed to generate the files. To generate all this needed files you must start the docker container with a volume mounted at /mnt (with `-v YOUR_FOLDER:/mnt`), at this folder mounted the container will save for you all the files. For example, to run the container and save the generated files at current folder ($PWD) you must run:
+
+    sudo docker run -it --name configuration --rm -v $PWD:/mnt openvpnserver /bin/bash
 
 Once you have started the container you can call the scripts in order to execute the different tasks:
 
