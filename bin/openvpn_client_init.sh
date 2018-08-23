@@ -27,10 +27,10 @@ popd
 pushd $FILES_CA_NAME_FOLDER
 
 # Import the client request to be signed
-easyrsa import-req ../$FILES_SVR_NAME_FOLDER/pki/reqs/$CLIENT_NAME.req $CLIENT_NAME
+easyrsa --vars=/tmp/ca_conf.properties import-req ../$FILES_SVR_NAME_FOLDER/pki/reqs/$CLIENT_NAME.req $CLIENT_NAME
 
 # Sign the client certificate
-easyrsa --batch sign-req client $CLIENT_NAME
+easyrsa --vars=/tmp/ca_conf.properties --batch sign-req client $CLIENT_NAME
 
 popd
 
