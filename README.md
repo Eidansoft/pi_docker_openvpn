@@ -24,7 +24,7 @@ In order to put the server up&running for the very first time, we must create so
 
 To generate all this needed files you must start the docker container with a volume mounted at /mnt (with `-v YOUR_FOLDER:/mnt`), at this folder mounted the container will save for you all the files. For example, to run the container and save the generated files at current folder ($PWD) you must run:
 
-   sudo docker run -it --name test --rm -v $PWD:/mnt openvpnserver /bin/bash
+    sudo docker run -it --name test --rm -v $PWD:/mnt openvpnserver /bin/bash
 
 Once you have started the container you can call the scripts in order to execute the different tasks:
 
