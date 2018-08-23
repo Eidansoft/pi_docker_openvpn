@@ -24,8 +24,10 @@ In order to put the server up&running for the very first time, we must create so
 
 First thing first, you must configure some specific values for your VPN.
 
-* At the `openvpn_client.conf` you must set the domain and the port you want to use for your server. The domain you must be the owner, or create one at www.no-ip.com and point it to your VPN Server.
+* At the `openvpn_client.conf` file you must set the domain and the port you want to use for your server. The domain you must be the owner, or create one at www.no-ip.com and point it to your VPN Server.
 The line to update is `remote myserver.ddns.net 1194`.
+
+* At the `ca_conf.properties` file you must configure the values to the ones better fit yourself, like your city, company name, mail, etc. Also here you can decide to change the size for your keys. I have set 4096 by default, for this reason the keys generation will take some time. If you prefer to use other valid value, feel free to change it.
 
 Now we can proceed to generate the files. To generate all this needed files you must start the docker container with a volume mounted at /mnt (with `-v YOUR_FOLDER:/mnt`), at this folder mounted the container will save for you all the files. For example, to run the container and save the generated files at current folder ($PWD) you must run:
 
