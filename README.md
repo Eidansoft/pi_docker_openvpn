@@ -60,7 +60,7 @@ Once you have finished creating all the needed files you can close the running c
 ## Start the container and run the OpenVPN service
 At the RaspberryPi you must also have the project cloned, and you must have copied the `files_openvpn` folder. Once you are ready to go just run the following:
 
-    sudo docker run -d --name openvpn --privileged -v PATH_OPENVPN_CONFIG_FILES:/mnt -p 1194:1194/udp --restart unless-stopped openvpnserver
+    sudo docker run -d --name openvpn --privileged -v PATH_OPENVPN_CONFIG_FILES:/mnt -p 1194:1194/udp -e SVR_NAME=<SERVER_NAME> --restart unless-stopped openvpnserver
 
 That command configure and run your OpenVPN service, you can see the log with:
 
