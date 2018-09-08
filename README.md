@@ -22,7 +22,7 @@ Once you have cloned the project, you need to build the docker image:
 ## Create all needed stuff
 In order to put the server up&running for the very first time, we must create some configuration files, keys and certificates.
 
-First thing first, you must configure some specific values for your VPN.
+First things first, you must configure some specific values for your VPN.
 
 * At the `openvpn_client.conf` file you must set the domain and the port you want to use for your server. The domain you must be the owner, or create one at www.no-ip.com and point it to your VPN Server.
 The line to update is `remote myserver.ddns.net 1194`.
