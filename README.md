@@ -58,7 +58,7 @@ The only files you will need to copy to your RaspberryPi is the `files_openvpn` 
 Once you have finished creating all the needed files you can close the running container just executing an `exit`.
 
 ## Start the container and run the OpenVPN service
-At the RaspberryPi you must also have the project cloned, and you must have copied the `files_openvpn` folder. Once you are ready to go just run the following:
+At the RaspberryPi you must also have the project cloned, and you must have copied the `files_openvpn` folder. Once you are ready to go just run the command below, just remmind to configure the ports with the one cofigured a the `openvpn_client.conf` file in order to make the client and the server use the same port, otherwise the client will fail to connect:
 
     sudo docker run -d --name openvpn --privileged -v PATH_OPENVPN_CONFIG_FILES:/mnt -p 1194:1194/udp -e SVR_NAME=<SERVER_NAME> --restart unless-stopped openvpnserver
 
