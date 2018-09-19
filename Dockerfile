@@ -25,7 +25,9 @@ ENV SVR_NAME svr
 COPY pi_notifications/rabbit_producer_basic.py /usr/bin
 COPY pi_notifications/log_watchdog.sh /usr/bin
 RUN apk add --update python3 && \
-    pip3 install pika
+    pip3 install pika && \
+    rm -rf /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*
+
 ENV RABBIT_HOSTNAME not_configured
 
 WORKDIR /mnt
