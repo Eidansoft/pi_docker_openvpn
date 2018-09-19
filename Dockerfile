@@ -18,8 +18,20 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/reposi
     ln -s /usr/share/easy-rsa/openssl-easyrsa.cnf /usr/local/bin/openssl-easyrsa.cnf && \
     ln -s /usr/share/easy-rsa/x509-types /usr/local/bin/
 
-WORKDIR /mnt
 
 ENV SVR_NAME svr
 
-CMD openvpn_run.sh $SVR_NAME
+# Add the notifications dependencies and code
+COPY pi_notifications/rabbit_producer_basic.py /usr/bin
+COPY pi_notifications/log_watchdog.sh /usr/bin
+RUN apk add --update python3 && \
+    pip3 install pika
+ENV RABBIT_HOSTNAME not_configured
+
+WORKDIR /mnt
+
+CMD if [ "$RABBIT_HOSTNAME" = "not_configured" ]; then \
+        openvpn_run.sh $SVR_NAME \
+    else \
+        openvpn_run.sh $SVR_NAME | log_watchdog.sh "TLS Error" "rabbit_producer_basic.py --host $RABBIT_HOSTNAME --exchange openvpn_notifications --message \"Security ERROR: \$line\"" \
+    fi
