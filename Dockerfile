@@ -31,7 +31,7 @@ ENV RABBIT_HOSTNAME not_configured
 WORKDIR /mnt
 
 CMD if [ "$RABBIT_HOSTNAME" = "not_configured" ]; then \
-        openvpn_run.sh $SVR_NAME \
+        openvpn_run.sh $SVR_NAME ;\
     else \
-        openvpn_run.sh $SVR_NAME | log_watchdog.sh "TLS Error" "rabbit_producer_basic.py --host $RABBIT_HOSTNAME --exchange openvpn_notifications --message \"Security ERROR: \$line\"" \
+        openvpn_run.sh $SVR_NAME | log_watchdog.sh "TLS Error" "rabbit_producer_basic.py --host $RABBIT_HOSTNAME --exchange openvpn_notifications --message \"Security ERROR: \$line\"" ;\
     fi
