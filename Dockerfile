@@ -29,11 +29,18 @@ RUN apk add --update python3 && \
     rm -rf /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*
 
 ENV RABBIT_HOSTNAME not_configured
+ENV RABBIT_USER guest
+ENV RABBIT_PW guest
 
 WORKDIR /mnt
 
 CMD if [ "$RABBIT_HOSTNAME" = "not_configured" ]; then \
         openvpn_run.sh $SVR_NAME ;\
     else \
-        openvpn_run.sh $SVR_NAME | log_watchdog.sh "TLS Error" "rabbit_producer_basic.py --host $RABBIT_HOSTNAME --exchange openvpn_notifications --message \"Security ERROR: \$line\"" ;\
+        openvpn_run.sh $SVR_NAME | \
+        log_watchdog.sh "TLS Error" \
+        "rabbit_producer_basic.py --host $RABBIT_HOSTNAME --exchange openvpn_notifications --user $RABBIT_USER --pw $RABBIT_PW --message \"Security ERROR: \$line\"" | \
+        log_watchdog.sh "Peer Connection Initiated" \
+        "rabbit_producer_basic.py --host $RABBIT_HOSTNAME --exchange openvpn_notifications --user $RABBIT_USER --pw $RABBIT_PW --message \"New connection: \$line\"" ;\
+
     fi
