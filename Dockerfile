@@ -43,5 +43,4 @@ CMD if [ "$RABBIT_HOSTNAME" = "not_configured" ]; then \
         "rabbit_producer_basic.py --host $RABBIT_HOSTNAME --exchange openvpn_notifications --user $RABBIT_USER --pw $RABBIT_PW --message \"Security ERROR: \$line\"" | \
         log_watchdog.sh "Peer Connection Initiated" \
         "rabbit_producer_basic.py --host $RABBIT_HOSTNAME --exchange openvpn_notifications --user $RABBIT_USER --pw $RABBIT_PW --message \"New connection: \$line\"" ;\
-
     fi
