@@ -1,0 +1,4 @@
+[submodule "docker_openvpn_rabbitnotification/pi_notifications"]
+	path = docker_openvpn_rabbitnotification/pi_notifications
+	url = https://github.com/Eidansoft/pi_notifications.git
+	branch = master
