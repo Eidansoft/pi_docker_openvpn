@@ -34,6 +34,10 @@ Some of the utilities that I are acostume to:
 
     sudo apt-get install tmux git ntp
 
+And configure the NTP
+
+    sudo timedatectl set-timezone Europe/Madrid
+
 ## Install Docker:
 
     sudo curl -sSL https://get.docker.com/ | sh
