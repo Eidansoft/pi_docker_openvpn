@@ -29,4 +29,4 @@ iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
 
 # Move into the openvpn folder and start the server
 pushd /etc/openvpn/
-openvpn --config /etc/openvpn/server.conf | tee /mnt/openvpn.log
+openvpn --config /etc/openvpn/server.conf
