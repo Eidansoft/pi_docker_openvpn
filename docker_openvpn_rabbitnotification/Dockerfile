@@ -2,8 +2,8 @@ FROM openvpnserver:latest
 
 LABEL maintainer="http://alejandro.lorente.info"
 
-COPY pi_notifications/rabbit_producer_basic.py /usr/bin
-COPY pi_notifications/log_watchdog.sh /usr/bin
+COPY pi_notifications/docker_pubsub_basic/rabbit_producer_basic.py /usr/bin
+COPY pi_notifications/docker_pubsub_basic/log_watchdog.sh /usr/bin
 
 RUN apk add --update python3 && \
     pip3 install pika && \
