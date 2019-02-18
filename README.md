@@ -17,6 +17,7 @@ In order to simplify the process I have created this container to do all needed 
 ## Create the Docker images
 Once you have cloned the project, you need to build the docker image:
 
+    cd docker_openvpn
     sudo docker build . -t openvpnserver
 
 ## Create all needed stuff
