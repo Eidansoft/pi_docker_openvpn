@@ -11,7 +11,12 @@ Running the command:
 
     sudo raspi-config
 
-Select <interfaces> and activate the SSH server, after this change you need to reboot the machine.
+* Select <Advanced Options> and then <Expand Filesystem>.
+* Select <interfaces> and activate the SSH server.
+
+For the RaspberryPi 3 you will also want to configure the WiFi country; at <Localisation Options> select <Change Wi-fi Country> and select your contry.
+
+After those changes you need to reboot the machine.
 
 ## Change the default password for the user 'pi'
 
@@ -37,6 +42,10 @@ Some of the utilities that I are acostume to:
 And configure the NTP
 
     sudo timedatectl set-timezone Europe/Madrid
+
+Clean the temporal files for apt
+
+    sudo apt-get clean
 
 ## Install Docker:
 
