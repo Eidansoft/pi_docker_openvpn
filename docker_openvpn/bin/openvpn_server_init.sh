@@ -18,14 +18,14 @@ check_working_folder_not_exist $FILES_SVR_NAME_FOLDER
 mkdir $FILES_SVR_NAME_FOLDER
 pushd $FILES_SVR_NAME_FOLDER
 
-# Creante the initial PKI structure
-easyrsa --vars=/tmp/ca_conf.properties init-pki
+# Create the initial PKI structure
+easyrsa --vars=$FILES_OPENVPN_FOLDER/ca_conf.properties init-pki
 
 # Generate the server certificate request
-easyrsa --vars=/tmp/ca_conf.properties --batch --req-cn="VPN Server $SVR_NAME" gen-req $SVR_NAME nopass
+easyrsa --vars=$FILES_OPENVPN_FOLDER/ca_conf.properties --batch --req-cn="VPN Server $SVR_NAME" gen-req $SVR_NAME nopass
 
 # Generate the Diffie-Hellman key
-easyrsa --vars=/tmp/ca_conf.properties gen-dh
+easyrsa --vars=$FILES_OPENVPN_FOLDER/ca_conf.properties gen-dh
 
 # Generate a HMAC signature
 openvpn --genkey --secret ta.key
