@@ -14,3 +14,11 @@ function create_folder_if_not_exist(){
     folder=$1
     [ ! -d $folder ] && mkdir -p $folder && echo "[INFO] Folder <$folder> created."
 }
+
+function is_openvpn_already_configured() {
+    # Function to detect if the files openvpn_client.conf y ca_conf.properties are already configured. To detect it must exist the FILES_OPENVPN_FOLDER folder and contains the configuration files.
+    [ ! -d $FILES_OPENVPN_FOLDER ] && echo "0" && return
+    [ ! -f $FILES_OPENVPN_FOLDER/openvpn_client.conf ] && echo "0" && return
+    [ ! -f $FILES_OPENVPN_FOLDER/ca_conf.properties ] && echo "0" && return
+    echo "1"
+}
