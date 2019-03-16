@@ -44,7 +44,7 @@ is_configured=$(is_openvpn_already_configured)
 if [ "$is_configured" == "0" ]; then
     echo "[INFO] OpenVPN not configured."
     read -p "Do you wanna configure it now? (y/n) "
-    if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+    if [[ "$REPLY" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
         create_folder_if_not_exist($FILES_OPENVPN_FOLDER)
         configure_domain_and_port
         configure_ca
