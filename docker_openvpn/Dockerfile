@@ -10,6 +10,7 @@ COPY bin/openvpn_ca_init.sh /usr/bin
 COPY bin/openvpn_server_init.sh /usr/bin
 COPY bin/openvpn_client_init.sh /usr/bin
 COPY bin/openvpn_run.sh /usr/bin
+COPY bin/openvpn_configure.sh /usr/bin
 
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
     apk add --update openvpn iptables bash easy-rsa && \
