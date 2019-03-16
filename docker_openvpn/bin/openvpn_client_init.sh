@@ -19,7 +19,7 @@ CLIENT_NAME=$1
 pushd $FILES_SVR_NAME_FOLDER
 
 # Generate the client certificate request
-easyrsa --vars=/tmp/ca_conf.properties --batch --req-cn="VPN Client $CLIENT_NAME" gen-req $CLIENT_NAME nopass
+easyrsa --vars=$FILES_OPENVPN_FOLDER/ca_conf.properties --batch --req-cn="VPN Client $CLIENT_NAME" gen-req $CLIENT_NAME nopass
 
 popd
 
@@ -27,10 +27,10 @@ popd
 pushd $FILES_CA_NAME_FOLDER
 
 # Import the client request to be signed
-easyrsa --vars=/tmp/ca_conf.properties import-req ../$FILES_SVR_NAME_FOLDER/pki/reqs/$CLIENT_NAME.req $CLIENT_NAME
+easyrsa --vars=$FILES_OPENVPN_FOLDER/ca_conf.properties import-req ../$FILES_SVR_NAME_FOLDER/pki/reqs/$CLIENT_NAME.req $CLIENT_NAME
 
 # Sign the client certificate
-easyrsa --vars=/tmp/ca_conf.properties --batch sign-req client $CLIENT_NAME
+easyrsa --vars=$FILES_OPENVPN_FOLDER/ca_conf.properties --batch sign-req client $CLIENT_NAME
 
 popd
 
