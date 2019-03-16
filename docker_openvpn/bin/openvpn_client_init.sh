@@ -45,7 +45,7 @@ cp $FILES_SVR_NAME_FOLDER/ta.key $CLIENT_FOLDER
 cp $FILES_CA_NAME_FOLDER/pki/ca.crt $CLIENT_FOLDER
 
 # Generate the *.ovpn file for the client
-cat /tmp/openvpn_client.conf \
+cat $FILES_OPENVPN_FOLDER/openvpn_client.conf \
     <(echo -e '<ca>') \
     $CLIENT_FOLDER/ca.crt \
     <(echo -e '</ca>\n<cert>') \
