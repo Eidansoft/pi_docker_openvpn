@@ -10,7 +10,7 @@ function configure_domain_and_port() {
     server_name=$REPLY
     read -p "On what port do you wanna OpenVPN listen you? (example: 1194) "
     port=$REPLY
-    cat openvpn_client.conf | sed "s/remote myserver.ddns.net 1194/remote $server_name $port/g" > $FILES_OPENVPN_FOLDER/openvpn_client.conf
+    cat /tmp/openvpn_client.conf | sed "s/remote myserver.ddns.net 1194/remote $server_name $port/g" > $FILES_OPENVPN_FOLDER/openvpn_client.conf
 }
 
 function configure_ca() {
@@ -26,7 +26,7 @@ function configure_ca() {
     read -p "What's your e-mail? (example: ceo@darma.com) "
     echo "set_var EASYRSA_REQ_EMAIL      \"$REPLY\"" >> ca_conf_file
     echo "set_var EASYRSA_REQ_OU         \"Personal\"" >> ca_conf_file
-    read "What key size do you wanna use [2048 or 4096]? (I strongly recomend you 4096) "
+    read -p "What key size do you wanna use [2048 or 4096]? (I strongly recomend you 4096) "
     echo "set_var EASYRSA_KEY_SIZE        $REPLY" >> ca_conf_file
 }
 
