@@ -32,9 +32,9 @@ function configure_ca() {
 
 function configure_openvpn() {
     echo "[INFO] We are gonna configure the server files and keys ..."
-    openvpn_server_init.sh srv
+    openvpn_server_init.sh svr
     echo "[INFO] We are gonna configure the CA files and keys ..."
-    openvpn_ca_init.sh srv
+    openvpn_ca_init.sh svr
     echo "[INFO] We are gonna configure the client ..."
     read -p "What client do you wanna configure? (example: myiphone, homepc, workpc, ...) "
     openvpn_client_init.sh $REPLY
