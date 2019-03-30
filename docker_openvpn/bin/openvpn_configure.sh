@@ -8,9 +8,9 @@ source openvpn_common_functions.sh
 function configure_domain_and_port() {
     read -p "What will be your openVPN domain name? (example: my-vpn.ddns.net) "
     server_name=$REPLY
-    # read -p "On what port do you wanna OpenVPN listen you? (example: 1194) "
-    # port=$REPLY
-    cat /tmp/openvpn_client.conf | sed "s/remote myserver.ddns.net 1194/remote $server_name 1194/g" > $FILES_OPENVPN_FOLDER/openvpn_client.conf
+    read -p "On what port do you wanna OpenVPN listen you? (example: 1194) "
+    port=$REPLY
+    cat /tmp/openvpn_client.conf | sed "s/remote myserver.ddns.net 1194/remote $server_name $port/g" > $FILES_OPENVPN_FOLDER/openvpn_client.conf
 }
 
 function configure_ca() {
