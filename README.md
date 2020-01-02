@@ -13,27 +13,20 @@ First of all, the process to implement a VPN requires three parts:
 In order to simplify the process I have created this container to do all needed tasks easy and quick.
 
 # Manual of use
+The first step is to generate all configuration files and keys, you can do it with the wizard 'openvpn_configure.sh'.
+This should be run into your laptop, because the keys generation takes lot of time into the raspberry.
 
-## Create the Docker images
-Once you have cloned the project, you need to build the docker image:
+    docker run -it --name configuration --rm -v /path_to_folder/where_save/config:/mnt eidansoft/openvpn openvpn_configure.sh
 
-    sudo docker build . -t openvpnserver
+# What will do the wizard for you?
+It will ask you the values and configure them at following files.
 
-## Create all needed stuff
-In order to put the server up&running for the very first time, we must create some configuration files, keys and certificates.
-
-First things first, you must configure some specific values for your VPN.
-
-* At the `openvpn_client.conf` file you must set the domain and the port you want to use for your server. The domain you must be the owner, or create one at www.no-ip.com and point it to your VPN Server.
+* At the `openvpn_client.conf` file set the domain and the port you want to use for your server. The domain you must be the owner, or create one at www.no-ip.com and point it to your VPN Server.
 The line to update is `remote myserver.ddns.net 1194`.
 
-* At the `ca_conf.properties` file you must configure the values to the ones better fit yourself, like your city, company name, mail, etc. Also here you can decide to change the size for your keys. I have set 4096 by default, for this reason the keys generation will take some time. If you prefer to use other valid value, feel free to change it.
+* At the `ca_conf.properties` file set the values to the ones better fit yourself, like your city, company name, mail, etc. Also here you can decide to change the size for your keys. I have set 4096 by default, for this reason the keys generation will take some time. If you prefer to use other valid value, feel free to change it.
 
-Now we can proceed to generate the files. To generate all this needed files you must start the docker container with a volume mounted at /mnt (with `-v YOUR_FOLDER:/mnt`), at this folder mounted the container will save for you all the files. For example, to run the container and save the generated files at current folder ($PWD) you must run:
-
-    sudo docker run -it --name configuration --rm -v $PWD:/mnt openvpnserver /bin/bash
-
-Once you have started the container you can call the scripts in order to execute the different tasks:
+And also it will call the scripts to generate all keys:
 
 * Initialize the OpenVPN server certificates, keys and configurations.
 
@@ -47,7 +40,7 @@ Once you have started the container you can call the scripts in order to execute
 
     openvpn_client_init.sh <CLIENT_NAME>
 
-At this point you have all needed files generated and saved at your folder. To be specific you will have four folders:
+Once the wizard finished you have all needed files generated and saved at your folder. To be specific you will have four folders:
 
 * files_ca - this folder contains all keys and certificates for your CA.
 * files_svr - this folder contains all keys and certificates for your OpenVPN server.
@@ -55,12 +48,9 @@ At this point you have all needed files generated and saved at your folder. To b
 * files_openvpn - this folder contains the configuration files for your OpenVPN server.
 
 The only files you will need to copy to your RaspberryPi is the `files_openvpn` folder.
-Once you have finished creating all the needed files you can close the running container just executing an `exit`.
 
 ## Start the container and run the OpenVPN service
-At the RaspberryPi you must also have the project cloned, and you must have copied the `files_openvpn` folder. Once you are ready to go just run the command below, just remmind to configure the ports with the one cofigured a the `openvpn_client.conf` file in order to make the client and the server use the same port, otherwise the client will fail to connect:
-
-    sudo docker run -d --name openvpn --privileged -v PATH_OPENVPN_CONFIG_FILES:/mnt -p 1194:1194/udp -e SVR_NAME=<SERVER_NAME> --restart unless-stopped openvpnserver
+    sudo docker run -d --name openvpn --privileged -v PATH_OPENVPN_CONFIG_FILES:/mnt -p 1194:1194/udp --restart unless-stopped eidansoft/openvpn
 
 That command configure and run your OpenVPN service, you can see the log with:
 
@@ -69,3 +59,6 @@ That command configure and run your OpenVPN service, you can see the log with:
 ## Stop the container with the OpenVPN service
 
     sudo docker rm -f openvpn
+
+# Known bugs
+I have suffered some issues when the VPN server is running on a raspberry connected through WiFi. To fix it you must use TCPinstead UDP, currently not supported, I need to do some changes for that.
