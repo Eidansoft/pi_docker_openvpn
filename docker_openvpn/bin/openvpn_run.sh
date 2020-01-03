@@ -20,7 +20,7 @@ sed -i.bak "s#^key .*\.key#key /etc/openvpn/$SVR_NAME.key#g" /etc/openvpn/server
 # Configure the OpenVpn server to use the same protocol than the one configured for
 # the client
 protocol_line=$(cat $FILES_OPENVPN_FOLDER/openvpn_client.conf | grep "^proto")
-sed -i.bak "s/^proto.+$/$protocol_line/g" /etc/openvpn/server.conf
+sed -i.bak "s/^proto.\+$/$protocol_line/g" /etc/openvpn/server.conf
 
 # Create the tun device if its not exists
 mkdir -p /dev/net
