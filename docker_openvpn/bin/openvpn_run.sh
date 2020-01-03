@@ -17,6 +17,11 @@ cp /mnt/$FILES_OPENVPN_FOLDER/* /etc/openvpn/
 sed -i.bak "s/^cert .*\.crt/cert $SVR_NAME.crt/g" /etc/openvpn/server.conf
 sed -i.bak "s/^key .*\.key/key $SVR_NAME.key/g" /etc/openvpn/server.conf
 
+# Configure the OpenVpn server to use the same protocol than the one configured for
+# the client
+protocol_line=$(cat $FILES_OPENVPN_FOLDER/openvpn_client.conf | grep "^proto")
+sed -i.bak "s/^proto.+$/$protocol_line/g" /etc/openvpn/server.conf
+
 # Create the tun device if its not exists
 mkdir -p /dev/net
 if [ ! -c /dev/net/tun ]; then
