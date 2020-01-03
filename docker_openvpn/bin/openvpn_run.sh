@@ -14,8 +14,8 @@ SVR_NAME=$1
 cp /mnt/$FILES_OPENVPN_FOLDER/* /etc/openvpn/
 
 # Configure the OpenVpn server to use the certificate created
-sed -i.bak "s/^cert .*\.crt/cert $SVR_NAME.crt/g" /etc/openvpn/server.conf
-sed -i.bak "s/^key .*\.key/key $SVR_NAME.key/g" /etc/openvpn/server.conf
+sed -i.bak "s#^cert .*\.crt#cert /etc/openvpn/$SVR_NAME.crt#g" /etc/openvpn/server.conf
+sed -i.bak "s#^key .*\.key#key /etc/openvpn/$SVR_NAME.key#g" /etc/openvpn/server.conf
 
 # Configure the OpenVpn server to use the same protocol than the one configured for
 # the client
